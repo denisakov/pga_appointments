@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <base target="_top">
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+   <script src="https://cdn.jsdelivr.net/momentjs/2.14.1/moment.min.js"></script>
+   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker.min.css">
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+   <script>
+     function preventFormSubmit() {
+       var forms = document.querySelectorAll('form');
+        for (var i = 0; i < forms.length; i++) {
+          forms[i].addEventListener('submit', function(event) {
+              event.preventDefault();
+          });
+        }
+     }
+     window.addEventListener('load', preventFormSubmit);
+
+     function handleFormSubmit(formObject) {
+       google.script.run.withSuccessHandler(closeIt).addNewEntry(formObject);
+     }
+     function closeIt(){
+       google.script.host.close();
+     }
+    </script>
+    <script>
+      $(function () {
+         $('#datetimepicker1').datetimepicker();
+         $('#datetimepicker2').datetimepicker();
+      });
+   </script>
+    <style>
+      body {
+        font-size: 16px;
+        font-family: Arial, Helvetica, sans-serif;
+      }
+      div{
+        margin-top: 1em;
+      }
+      input,select{
+        line-height: 20px;
+      }
+      input[value='Cancel']{
+        width: 80px;
+        background-color: #f4511e;
+        border: none;
+        color: white;
+        padding: 5px 10px;
+        text-align: center;
+        font-size: 16px;
+        margin: 4px 2px;
+        display: inline-block;
+        text-decoration: none;
+        cursor: pointer;
+        float: right;
+      }
+      input[type='submit']{
+        width: 80px;
+        background-color: #4CAF50;
+        border: none;
+        color: white;
+        padding: 5px 10px;
+        text-align: center;
+        font-size: 16px;
+        margin: 4px 2px;
+        display: inline-block;
+        text-decoration: none;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <form id="myForm" onsubmit="handleFormSubmit(this)" >
+      <div class="form-group">
+        <label class="control-label">Title</label>
+        <input type="text" class="form-control" name="title" id="title">
+      </div>
+      <div class="form-group">
+        <label class="control-label">Location</label>
+        <input type="text" class="form-control" name="loc" id="loc">
+      </div>
+      <div class="form-group">
+        <label class="control-label">Number of Participants</label>
+        <input type="number" class="form-control" name="slots" id="slots">
+      </div>
+      <div class="form-group">
+        <label class="control-label">Start Time</label>
+        <div class="input-group date" id="datetimepicker1">
+           <input type="text" name="start" class="form-control" />
+           <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="control-label">End Time</label>
+        <div class="input-group date" id="datetimepicker2">
+           <input type="text" name="end" class="form-control" />
+           <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+        </div>
+      </div>
+      <div>
+        <input type="submit" value="Submit" /> <input type="button" value="Cancel" onclick="google.script.host.close()"/>
+      </div>
+    </form>
+  </body>
+   
+</html>
